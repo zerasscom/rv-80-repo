@@ -1,0 +1,1 @@
+@extends('layouts.cms_panel.app')

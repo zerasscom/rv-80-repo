@@ -1,0 +1,53 @@
+# Disable index view
+Options -Indexes
+
+# Hide a specific file
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+    RewriteEngine On
+
+    RewriteCond %{REQUEST_URI} !^public
+    RewriteRule ^(.*)$ public/$1 [L]
+
+    # Redirect from HTTP to HTTPS
+    #RewriteCond %{HTTPS} off
+    #RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Redirect from HTTPS to HTTP
+    #RewriteCond %{HTTPS} on
+    #RewriteRule (.*) http://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+    # Redirect from non-www to https://www
+    #RewriteCond %{HTTP_HOST} !^www\. [NC]
+    #RewriteRule .* https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Redirect from non-www. to http://www.
+    #RewriteCond %{HTTP_HOST} !^www\.
+    #RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+
+    # Redirect from www to http://%non-www.
+    #RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+    #ewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
+    # Redirect from www to https://%non-www.
+    #RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+    #ewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+
+
+    # Redirect from this old domain to new one
+    #RewriteEngine On
+    #RewriteRule ^(.*)$ http://www.yournewdomain.com/$1 [R=301,L]
+</IfModule>
+<ifmodule mod_deflate.c="">
+    <filesmatch .(js|css)$="">
+        SetOutputFilter DEFLATE
+    </filesmatch>
+</ifmodule>
